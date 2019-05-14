@@ -34,9 +34,7 @@ void num (int len, string numero){
     for (int i = 0; i < 5; i++){
         if (i % 2 == 0){
             for (int j = 0; numero[j] != '\0'; j++){
-                if (j != 0){
-                    cout << " ";
-                }
+
                 switch(numero[j]){
                     case '0':
                         cout << lista0[i];
@@ -69,15 +67,15 @@ void num (int len, string numero){
                         cout << lista9[i];
                         break;
                 }
+                cout << " ";
             }
             cout << endl;
+
         }
         else{
             for (int k = 0; k < len; k++){
                 for (int j = 0; numero[j] != '\0'; j++){
-                    if (j != 0){
-                        cout << " ";
-                    }
+
                     switch(numero[j]){
                     case '0':
                         cout << lista0[i];
@@ -110,11 +108,13 @@ void num (int len, string numero){
                         cout << lista9[i];
                         break;
                     }
+                    cout << " ";
                 }
                 cout << endl;
             }
         }
     }
+    cout << endl;
 }
 
 int main(){
