@@ -2,13 +2,14 @@
 using namespace std;
 
 int len (string palavra, bool ver);
-void func1 (string palavra);
 void func2(string palavra);
+void func1 (string palavra);
 
-int len (string palavra, bool ver){
+
+int len (string palavra){
     int total = 0;
     for (int i = 0; palavra[i] != '\0'; i++){
-        if (ver && palavra[i] == ' ') continue;
+
         total++;
     }
     return total;
@@ -25,20 +26,19 @@ void func1 (string palavra){
 }
 
 void func2 (string palavra){
-    int maximo = len(palavra, false);
-    int maxSemEspaco = len(palavra, false);
+    int maximo = len(palavra);
+    int maxSemEspaco = len(palavra);
 
     if (maxSemEspaco %2 == 0) maxSemEspaco /= 2;
     else maxSemEspaco = (maxSemEspaco + 1) / 2;
 
     for (int i = 0; maxSemEspaco > 0; i++){
-        if (palavra[i] == ' '){
             maxSemEspaco --;
+        if (palavra[i] == ' '){
             continue;
         }
 
         palavra[i] = (char)((int)palavra[i] - 1);
-        maxSemEspaco --;
     }
 
     for (int i = maximo-1; i>=0; i--) cout << palavra[i];
