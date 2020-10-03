@@ -46,9 +46,9 @@ void drawRetangule (int x1, int y1, int x2, int y2, char color){
 void fillRetangule (int x, int y, char color, int c, int l, char colorAtual){
     mat[y][x] = color;
 
-    if (x+1 < c && mat[y][x+1] == colorAtual) fillRetangule(x+1, y, color, c, l, colorAtual);
+    if (x+1 <= c && mat[y][x+1] == colorAtual) fillRetangule(x+1, y, color, c, l, colorAtual);
     if (x-1 > 0 && mat[y][x-1] == colorAtual) fillRetangule(x-1, y, color, c, l, colorAtual);//Essa
-    if (y+1 < l && mat[y+1][x] == colorAtual) fillRetangule(x, y+1, color, c, l, colorAtual);
+    if (y+1 <= l && mat[y+1][x] == colorAtual) fillRetangule(x, y+1, color, c, l, colorAtual);
     if (y-1 > 0 && mat[y-1][x] == colorAtual) fillRetangule(x, y-1, color, c, l, colorAtual);//Essa
 }
 
