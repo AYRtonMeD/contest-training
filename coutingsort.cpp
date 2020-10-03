@@ -2,13 +2,12 @@
 #include <string.h>
 #include <cstdlib>
 
-#define TAM 100000//0
+#define TAM 1000000
 
 using namespace std;
 
 //VETORES USADOS NO COUNTING ALOCADOS GLOBALMENTE
-//int c[27];
-string b[TAM];
+char b[TAM][4];
 
 //função de comparação usada no qsort
 int compare(const void*a, const void*b) {
@@ -17,10 +16,9 @@ int compare(const void*a, const void*b) {
     return strcmp(va,vb);
 }
 
-void countingsort(string A[TAM], int n, int k, int d) {
+void countingsort(char A[TAM][4], int n, int k, int d) {
 
     int c[27] = {}; //zera o vetor c
-
     //Aumenta em 1 a posição do vetor C equivalente ao valor do vetor A
     for (int i = 0; i < TAM; i++){
         c[A[i][d] - 'a']++;
@@ -31,18 +29,13 @@ void countingsort(string A[TAM], int n, int k, int d) {
     }
 
     for (int i = TAM-1; i >= 0; i--){
-        b[c[A[i][d] - 'a']-1] = A[i];
+        strcpy(b[c[A[i][d] - 'a']-1], A[i]);
         c[A[i][d] - 'a']--;
     }
-    cout << endl;
+
     for (int i = 0; i < TAM; i++){
-        A[i] = b[i];
-
-        cout << b[i] << endl;
+        strcpy(A[i], b[i]);
     }
-    cout << "---------";
-    cout << endl;
-
 
     //IMPLEMENTE O RESTO DO COUNTING SORT
     //OBS: pode supor que a entrada só contém letras minúsculas e as strings tem tamanho 4 (três caracteres e o \0 do final)
@@ -51,10 +44,9 @@ void countingsort(string A[TAM], int n, int k, int d) {
 }
 
 int main() {
-    string nomes[TAM];
-    string nomescopy[TAM];
+    char nomes[TAM][4];
+    char nomescopy[TAM][4];
     srand(time(NULL));
-
     clock_t ticks[2];
 
     //gera strings de 3 digitos aleatórias
@@ -63,14 +55,13 @@ int main() {
         for(int k = 0; k < 3; k++) stral[k] = (rand()%26) + 'a'; //gera numero aleatorio
         stral[3] = '\0';
         cout << stral << endl;
-        nomes[i] = stral; //copia o numero aletorio gerado para o vetor stral
+        strcpy(nomes[i], stral); //copia o numero aletorio gerado para o vetor stral
     }
 
     //faz uma cópia do array de string para usar no qsort
-    for(int i = 0; i < TAM; i++) nomescopy[i] = nomes[i];
+    for(int i = 0; i < TAM; i++) strcpy(nomescopy[i], nomes[i]);
     ticks[0] = clock();
     //executa o radix sort
-
     for(int d = 2; d >= 0; d--) {
         countingsort(nomes,TAM,27,d);
     }
@@ -83,7 +74,9 @@ int main() {
     ticks[1] = clock();
     double tempo2 = (double)(ticks[1] - ticks[0])/ CLOCKS_PER_SEC;
     //verifica se os resultados das ordenações foram iguais
-
+    for(int i = 0; i < TAM; i++) {
+        cout << nomes[i] << "  " << nomescopy[i] << " - " << strcmp(nomes[i], nomescopy[i]) << endl;
+    }
 
 
     //mostra o tempo de execução dos algoritmos

@@ -1,130 +1,86 @@
-#include <iostream>
-#include <cstdio>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-string horizontal(int len, char c){
-    string palavra = "";
-    for (int x = 0; x < len; x++){
-        palavra += c;
+string generateLine (char c, int s){
+    string str;
+
+    for (int i = 0; i < s; i++){
+        str += c;
     }
-    return palavra;
+
+    return str;
 }
 
-void num (int len, string numero){
+string generateRow (char c, int s){
+    string row;
 
-    string v1 = ' ' + horizontal(len, '-')+ ' ';
-    string v2 = ' ' + horizontal(len, ' ') + ' ';
-    string v4 = horizontal(len, ' ');
-    string v3 = '|' + v4 + '|';
-    string v5 = '|' + v4 + ' ';
-    string v6 = ' ' + v4 + '|';
+    row += " ";
+    row += generateLine (c, s);
+    row += " ";
 
-    string lista0[5] = {v1,v3,v2,v3,v1};
-    string lista1[5] = {v2,v6,v2,v6,v2};
-    string lista2[5] = {v1,v6,v1,v5,v1};
-    string lista3[5] = {v1,v6,v1,v6,v1};
-    string lista4[5] = {v2,v3,v1,v6,v2};
-    string lista5[5] = {v1,v5,v1,v6,v1};
-    string lista6[5] = {v1,v5,v1,v3,v1};
-    string lista7[5] = {v1,v6,v2,v6,v2};
-    string lista8[5] = {v1,v3,v1,v3,v1};
-    string lista9[5] = {v1,v3,v1,v6,v1};
-
-    for (int i = 0; i < 5; i++){
-        if (i % 2 == 0){
-            for (int j = 0; numero[j] != '\0'; j++){
-
-                switch(numero[j]){
-                    case '0':
-                        cout << lista0[i];
-                        break;
-                    case '1':
-                        cout << lista1[i];
-                        break;
-                    case '2':
-                        cout << lista2[i];
-                        break;
-                    case '3':
-                        cout << lista3[i];
-                        break;
-                    case '4':
-                        cout << lista4[i];
-                        break;
-                    case '5':
-                        cout << lista5[i];
-                        break;
-                    case '6':
-                        cout << lista6[i];
-                        break;
-                    case '7':
-                        cout << lista7[i];
-                        break;
-                    case '8':
-                        cout << lista8[i];
-                        break;
-                    case '9':
-                        cout << lista9[i];
-                        break;
-                }
-                cout << " ";
-            }
-            cout << endl;
-
-        }
-        else{
-            for (int k = 0; k < len; k++){
-                for (int j = 0; numero[j] != '\0'; j++){
-
-                    switch(numero[j]){
-                    case '0':
-                        cout << lista0[i];
-                        break;
-                    case '1':
-                        cout << lista1[i];
-                        break;
-                    case '2':
-                        cout << lista2[i];
-                        break;
-                    case '3':
-                        cout << lista3[i];
-                        break;
-                    case '4':
-                        cout << lista4[i];
-                        break;
-                    case '5':
-                        cout << lista5[i];
-                        break;
-                    case '6':
-                        cout << lista6[i];
-                        break;
-                    case '7':
-                        cout << lista7[i];
-                        break;
-                    case '8':
-                        cout << lista8[i];
-                        break;
-                    case '9':
-                        cout << lista9[i];
-                        break;
-                    }
-                    cout << " ";
-                }
-                cout << endl;
-            }
-        }
-    }
-    cout << endl;
+    return row;
 }
 
-int main(){
-    int height;
-    string number;
+string generateColumn (char c1, char c2, int s){
+    string column;
 
-    while (cin >> height >> number && (height != 0 || number != "0")){
+    column += c1;
+    column += generateLine (' ', s);
+    column += c2;
 
-            num(height, number);
+    return column;
+}
 
+void print(string n[10][5], string numero, int c, int qloop){
+    for (int j = 0; j < qloop; j++){
+        for (int i = 0; numero[i] != '\0'; i++){
+            int index = numero[i] - 48;
+
+            cout << n[index][c];
+
+            if (numero[i+1] != '\0') cout << ' ';
+        }
+        cout << endl;
+    }
+}
+
+void printLines (string numero, int s){
+    string sEmpty = generateRow (' ', s);
+    string sFull = generateRow ('-', s);
+    string sDouble = generateColumn('|', '|', s);
+    string sLeft = generateColumn('|', ' ', s);
+    string sRight = generateColumn(' ', '|', s);
+
+    string n[10][5] = {  sFull, sDouble, sEmpty, sDouble, sFull,
+                        sEmpty, sRight, sEmpty, sRight, sEmpty,
+                        sFull, sRight, sFull, sLeft, sFull,
+                        sFull, sRight, sFull, sRight, sFull,
+                        sEmpty, sDouble, sFull, sRight, sEmpty,
+                        sFull, sLeft, sFull, sRight, sFull,
+                        sFull, sLeft, sFull, sDouble, sFull,
+                        sFull, sRight, sEmpty, sRight, sEmpty,
+                        sFull, sDouble, sFull, sDouble, sFull,
+                        sFull, sDouble, sFull, sRight, sFull
+    };
+
+    print(n, numero, 0, 1);
+    print(n, numero, 1, s);
+    print(n, numero, 2, 1);
+    print(n, numero, 3, s);
+    print(n, numero, 4, 1);
+
+}
+
+int main (){
+    string numero;
+    int s;
+    bool eh = false;
+
+
+    while (cin >> s >> numero && (s != 0)){
+
+        printLines(numero, s);
+        cout << endl;
     }
 
     return 0;
